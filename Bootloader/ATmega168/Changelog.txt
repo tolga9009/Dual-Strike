@@ -28,6 +28,16 @@ bottom to see the most recent changes.
 
 * Release 2008-11-26
 
+- Allow option "-r" to bootloadHID alone, even without uploading a file.
+- Added optimizations for gcc 4.3.
+
+* Release 2010-07-29
+
+- Updated to latest driver.
+- Fixed compiler errors in latest gcc/avr-libc.
+
+* Release 2012-12-08
+
 * Modification 2010-07-01 for Dual Strike project
 
 - splitted enterBootloaderCondition() into one macro for entering and one for
