@@ -14,27 +14,13 @@
 #     make flash   # to load the boot loader into flash
 #     make lock    # to protect the boot loader from overwriting
 
-DEVICE = atmega168
-BOOTLOADER_ADDRESS = 1800
+DEVICE = atmega328p
+BOOTLOADER_ADDRESS = 0x7000
 F_CPU = 12000000
-FUSEH = 0xc0
-FUSEL = 0x9f
-# Fuse high byte:
-# 0xc0 = 1 1 0 0   0 0 0 0 <-- BOOTRST (boot reset vector at 0x1800)
-#        ^ ^ ^ ^   ^ ^ ^------ BOOTSZ0
-#        | | | |   | +-------- BOOTSZ1
-#        | | | |   + --------- EESAVE (preserve EEPROM over chip erase)
-#        | | | +-------------- CKOPT (full output swing)
-#        | | +---------------- SPIEN (allow serial programming)
-#        | +------------------ WDTON (WDT not always on)
-#        +-------------------- RSTDISBL (reset pin is enabled)
-# Fuse low byte:
-# 0x9f = 1 0 0 1   1 1 1 1
-#        ^ ^ \ /   \--+--/
-#        | |  |       +------- CKSEL 3..0 (external >8M crystal)
-#        | |  +--------------- SUT 1..0 (crystal osc, BOD enabled)
-#        | +------------------ BODEN (BrownOut Detector enabled)
-#        +-------------------- BODLEVEL (2.7V)
+FUSEH = 0xd8
+FUSEL = 0xcf
+#FUSEE = 0xff
+# https://eleccelerator.com/fusecalc/fusecalc.php?chip=atmega328p&LOW=CF&HIGH=D8&EXTENDED=FF&LOCKBIT=3F
 
 ###############################################################################
 

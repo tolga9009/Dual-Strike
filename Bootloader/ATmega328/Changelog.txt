@@ -42,3 +42,10 @@ bottom to see the most recent changes.
 
 - splitted enterBootloaderCondition() into one macro for entering and one for
   leaving bootloader
+- adapted to Dual Strike PCB
+- adapted to ATmega168
+- removed commandline tool
+
+* Modfications 2019 by tolga9009:
+
+- Makefile customized for ATmega328
