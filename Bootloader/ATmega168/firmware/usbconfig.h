@@ -5,7 +5,7 @@
  * Tabsize: 4
  * Copyright: (c) 2007 by OBJECTIVE DEVELOPMENT Software GmbH
  * License: GNU GPL v2 (see License.txt)
- * This Revision: $Id: usbconfig.h 693 2008-11-14 15:09:37Z cs $
+ * This Revision: $Id$
  */
 
 #ifndef __usbconfig_h_included__
@@ -253,6 +253,8 @@ tuningOverflow:
 #define USB_CFG_DESCR_PROPS_HID                     0
 #define USB_CFG_DESCR_PROPS_HID_REPORT              0
 #define USB_CFG_DESCR_PROPS_UNKNOWN                 0
+
+#define usbMsgPtr_t unsigned short  /* Use scalar type in order to save a couple of bytes */
 
 /* ----------------------- Optional MCU Description ------------------------ */
 

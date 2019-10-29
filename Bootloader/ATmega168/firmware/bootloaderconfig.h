@@ -5,7 +5,7 @@
  * Tabsize: 4
  * Copyright: (c) 2007 by OBJECTIVE DEVELOPMENT Software GmbH
  * License: GNU GPL v2 (see License.txt)
- * This Revision: $Id: bootloaderconfig.h 699 2008-11-26 19:50:32Z cs $
+ * This Revision: $Id$
  */
 
 #ifndef __bootloaderconfig_h_included__
@@ -109,8 +109,7 @@ these macros are defined, the boot loader usees them.
 static inline void  bootLoaderInit(void)
 {
 /*
-    PORTD = 1 << 6; // activate pull-up for key 
-	PORTD	|= (1<<6);		// pull up
+    PORTD = 1 << 3; // activate pull-up for key
 */
 	PORTC	= 0b00111111;	// PORTC inputs with pull-ups
 	DDRC	= 0b00000000;

@@ -5,7 +5,7 @@
  * Tabsize: 4
  * Copyright: (c) 2007 by OBJECTIVE DEVELOPMENT Software GmbH
  * License: GNU GPL v2 (see License.txt)
- * This Revision: $Id: main.c 693 2008-11-14 15:09:37Z cs $
+ * This Revision: $Id$
  */
 
 #include <avr/io.h>
@@ -43,7 +43,7 @@ static uchar            exitMainloop;
 #endif
 
 
-PROGMEM char usbHidReportDescriptor[33] = {
+const PROGMEM char usbHidReportDescriptor[33] = {
     0x06, 0x00, 0xff,              // USAGE_PAGE (Generic Desktop)
     0x09, 0x01,                    // USAGE (Vendor Usage 1)
     0xa1, 0x01,                    // COLLECTION (Application)
@@ -125,7 +125,7 @@ static uchar    replyBuffer[7] = {
         }
 #endif
     }else if(rq->bRequest == USBRQ_HID_GET_REPORT){
-        usbMsgPtr = replyBuffer;
+        usbMsgPtr = (usbMsgPtr_t)replyBuffer;
         return 7;
     }
     return 0;
@@ -215,7 +215,7 @@ uchar   i = 0;
     sei();
 }
 
-int main(void)
+int __attribute__((noreturn)) main(void)
 {
     /* initialize hardware */
     bootLoaderInit();
@@ -234,7 +234,7 @@ int main(void)
             usbPoll();
 #if BOOTLOADER_CAN_EXIT
             if(exitMainloop){
-				break;
+                break;
 /*
 #if F_CPU == 12800000
                 break;  // memory is tight at 12.8 MHz, save exit delay below
@@ -246,9 +246,7 @@ int main(void)
 */
             }
 #endif
-        } while (!exitBootLoaderCondition());
+        }while(!exitBootLoaderCondition());
     }
     leaveBootloader();
-    return 0;
 }
-
