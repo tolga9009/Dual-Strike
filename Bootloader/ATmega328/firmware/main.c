@@ -223,7 +223,6 @@ int __attribute__((noreturn)) main(void)
     DBG1(0x00, 0, 0);
     /* jump to application if jumper is set */
     if(enterBootLoaderCondition()){
-        uchar i = 0, j = 0;
 #ifndef TEST_MODE
         GICR = (1 << IVCE);  /* enable change of interrupt vectors */
         GICR = (1 << IVSEL); /* move interrupts to boot flash section */
