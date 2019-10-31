@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for Dual Strike Firmware (ATmega168)
+# Makefile for Dual Strike Firmware (ATmega328P)
 ###############################################################################
 
 ## General Flags
 PROJECT = DualStrike
-ATMEGA_NO = 168
-MCU = atmega$(ATMEGA_NO)
+ATMEGA_NO = 328
+MCU = atmega$(ATMEGA_NO)p
 TARGET = DualStrike.elf
 CC = avr-gcc
 
@@ -44,7 +44,7 @@ OBJECTS = DualStrike.o pass-through.o usb_controller.o usbdrv.o usbdrvasm.o
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) dual_strike_firmware_atmega168.hex dual_strike_firmware_atmega168.eep size
+all: $(TARGET) dual_strike_firmware_atmega328.hex dual_strike_firmware_atmega328.eep size
 
 ## Compile
 DualStrike.o: ../DualStrike.c
@@ -77,13 +77,11 @@ $(TARGET): $(OBJECTS)
 
 size: ${TARGET}
 	@avr-size -C --mcu=${MCU} ${TARGET}
-	@echo "Only 14336 bytes (87.5%%) are available on the device due to the bootloader!"
 
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf *.o *.elf dep/* *.eep
+	-rm -rf *.o *.elf dep/* *.eep *.hex
 
 ## Other dependencies
 -include $(shell mkdir dep 2>/dev/null) $(wildcard dep/*)
-

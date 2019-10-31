@@ -20,16 +20,16 @@
 #error ATmega number has to be defined.
 #endif
 
-#if ((ATMEGA_NO != 8) && (ATMEGA_NO != 168))
+#if ATMEGA_NO != 168 && ATMEGA_NO != 328
 #error ATmega with unsupported number used.
 #endif
 
-#if (ATMEGA_NO == 8)
-#include "configuration_atmega8.h"
+#if ATMEGA_NO == 168
+#include "configuration_atmega328.h"
 #endif
 
-#if (ATMEGA_NO == 168)
-#include "configuration_atmega168.h"
+#if ATMEGA_NO == 328
+#include "configuration_atmega328.h"
 #endif
 
 // set to 1 for SMD version of the Dual Strike
