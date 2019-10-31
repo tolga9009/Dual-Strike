@@ -327,7 +327,7 @@ PROGMEM const char usbDescriptorConfigurationEP[] = {
     200 						/* interrupt poll interval in ms */
 };
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 // MAME
 
 PROGMEM const char usbDescriptorDeviceMAME[] = {    /* USB device descriptor */
@@ -641,7 +641,7 @@ usbMsgLen_t usbFunctionDescriptor(struct usbRequest *rq) {
 			break;
 	    }
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 		break;
 
 	case USB_MODE_MAME:

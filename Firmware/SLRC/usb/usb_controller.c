@@ -28,7 +28,7 @@ typedef struct {
 	uchar	joystick_axes;
 } pcreport_t;
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 typedef struct {
 	uchar reportID;
 	uchar data[4];
@@ -53,7 +53,7 @@ typedef union {
 	uchar array[132];
 	ps3report_t ps3report;
 	pcreport_t pcreport;
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 	mame_reports_t mame_reports;
 #endif
 } usb_data_t;
@@ -71,7 +71,7 @@ static uchar usbMode = -1;
 #define USB_MODE_PS3 1
 #define USB_MODE_PC	 2
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 #define USB_MODE_MAME 3
 #define USB_MODE_XBOX 4
 #endif
@@ -325,7 +325,7 @@ usbMsgLen_t usbFunctionSetup(uchar receivedData[8]) {
 				}
 		    }
 		}
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 		break;
 
 	case USB_MODE_MAME:
@@ -473,7 +473,7 @@ void disconnectUSB() {
 
 #include "programmer.c"
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 #include "mame.c"
 #include "xbox.c"
 #endif

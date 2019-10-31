@@ -20,7 +20,7 @@
 #error ATmega number has to be defined.
 #endif
 
-#if ATMEGA_NO != 168 && ATMEGA_NO != 328
+#if (ATMEGA_NO != 168 && ATMEGA_NO != 328)
 #error ATmega with unsupported number used.
 #endif
 

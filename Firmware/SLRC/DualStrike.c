@@ -17,7 +17,7 @@ While plugging in the USB Cable just press Select. Leave it by pressing Start.
 #define WORKING_MODE_PC		2
 #define WORKING_MODE_AUTO	3
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 #define WORKING_MODE_MAME	4
 #define WORKING_MODE_XBOX	5
 #endif
@@ -95,7 +95,7 @@ int setModePC() {
 	return WORKING_MODE_PC;
 }
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 int setModeMAME() {	
 	enableUsbLines();
 
@@ -133,7 +133,7 @@ int setModeDefault() {
 		return setModePS3();
 	else if(CFG_DEF_WORK_MODE_PC)
 		return setModePC();
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 	else if(CFG_DEF_WORK_MODE_MAME)
 		return setModeMAME();
 	else if(CFG_DEF_WORK_MODE_XBOX)
@@ -197,7 +197,7 @@ int hardwareInit() {
 	if(CFG_WORK_MODE_PC_ENABLED)
 		enabledWorkingModes++;
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 	if(CFG_WORK_MODE_MAME_ENABLED)
 		enabledWorkingModes++;
 	
@@ -212,7 +212,7 @@ int hardwareInit() {
 		if(!Stick_LK && CFG_WORK_MODE_PS3_ENABLED)
 			return setModePS3();
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 		if(!Stick_MK && CFG_WORK_MODE_MAME_ENABLED)
 			return setModeMAME();
 
@@ -239,7 +239,7 @@ int hardwareInit() {
 			if(!CFG_DEF_WORK_MODE_PC && CFG_WORK_MODE_PC_ENABLED)
 				return setModePC();
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 			if(!CFG_DEF_WORK_MODE_MAME && CFG_WORK_MODE_MAME_ENABLED)
 				return setModeMAME();
 	
@@ -341,7 +341,7 @@ uchar autodetectLimit = 0;
 uchar detected = 0;
 
 void initAutodetectTimer() {
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 	TCCR0B = (1<<CS00) | (1<<CS02); // clock prescaling: 1024 cycles
 #else
 	TCCR0 = (1<<CS00) | (1<<CS02); // clock prescaling: 1024 cycles
@@ -350,7 +350,7 @@ void initAutodetectTimer() {
 
 void resetAutodetectTimer() {
 	autodetectCount = 0;
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 	TCNT0 = 0;
 	TIFR0 |= (1<<TOV0); // reset overflow flag
 #else
@@ -366,7 +366,7 @@ void resetAutodetect() {
 
 uchar autodetectTimePassed() {
 	if(
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 		TIFR0 & (1<<TOV0)
 #else
 		TIFR & (1<<TOV0)
@@ -375,7 +375,7 @@ uchar autodetectTimePassed() {
 		if(autodetectCount < 255)
 			autodetectCount++;
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 		TIFR0 |= (1<<TOV0); // reset overflow flag
 #else
 		TIFR |= (1<<TOV0); // reset overflow flag
@@ -408,7 +408,7 @@ void autodetect() {
 	}
 
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 	if(CFG_WORK_MODE_XBOX_ENABLED) {
 		resetAutodetect();
 		setModeXBox();
@@ -478,7 +478,7 @@ int main(void) {
 	  pc_controller();
 	  break;
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 	case WORKING_MODE_MAME:
 	  mame_controller();
 	  break;

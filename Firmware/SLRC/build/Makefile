@@ -4,9 +4,9 @@
 
 ## General Flags
 PROJECT = DualStrike
-ATMEGA_NO = 328
-MCU = atmega$(ATMEGA_NO)p
-TARGET = DualStrike.elf
+ATMEGA_NO = 168
+MCU = atmega$(ATMEGA_NO)
+TARGET = $(PROJECT).elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -44,7 +44,7 @@ OBJECTS = DualStrike.o pass-through.o usb_controller.o usbdrv.o usbdrvasm.o
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) dual_strike_firmware_atmega328.hex dual_strike_firmware_atmega328.eep size
+all: $(TARGET) $(PROJECT)_$(MCU).hex $(PROJECT)_$(MCU).eep size
 
 ## Compile
 DualStrike.o: ../DualStrike.c

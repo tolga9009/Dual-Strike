@@ -7,7 +7,7 @@ void pc_init_controller();
 void pc_test_controller();
 void pc_controller();
 
-#if ATMEGA_NO == 168 || ATMEGA_NO == 328
+#if (ATMEGA_NO == 168 || ATMEGA_NO == 328)
 void mame_controller();
 void xbox_init_controller();
 void xbox_controller();
