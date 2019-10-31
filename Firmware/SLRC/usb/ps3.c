@@ -57,68 +57,34 @@ void readInputPS3() {
 	resetPS3ReportBuffer();
 	updateStickState();	
 
-	if(CFG_JOYSTICK_SWITCH_READ || !metaPressed) {
-		// Left Joystick Directions
-		if(CFG_LEFT_STICK) {
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP))
-				PS3_LS_UP
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN))
-				PS3_LS_DOWN
-
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT))
-				PS3_LS_LEFT
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT))
-				PS3_LS_RIGHT
+	// Digital Pad Directions
+	if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP)) {
+		if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
+			PS3_DPAD_UP_LEFT
 		}
-
-		// Right Joystick Directions
-		if(CFG_RIGHT_STICK) {
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP))
-				PS3_RS_UP
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN))
-				PS3_RS_DOWN
-		
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT))
-				PS3_RS_LEFT
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT))
-				PS3_RS_RIGHT
+		else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
+			PS3_DPAD_UP_RIGHT
 		}
-
-		// Digital Pad Directions
-		if(CFG_DIGITAL_PAD) {
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP)) {
-				if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
-					PS3_DPAD_UP_LEFT
-				}
-				else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
-					PS3_DPAD_UP_RIGHT
-				}
-				else {
-					PS3_DPAD_UP
-				}
-			}
-			else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN)) {
-				if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
-					PS3_DPAD_DOWN_LEFT
-				}
-				else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
-					PS3_DPAD_DOWN_RIGHT
-				}
-				else {
-					PS3_DPAD_DOWN
-				}
-			}
-			else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
-				PS3_DPAD_LEFT
-			}
-			else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
-				PS3_DPAD_RIGHT
-			}
+		else {
+			PS3_DPAD_UP
 		}
+	}
+	else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN)) {
+		if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
+			PS3_DPAD_DOWN_LEFT
+		}
+		else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
+			PS3_DPAD_DOWN_RIGHT
+		}
+		else {
+			PS3_DPAD_DOWN
+		}
+	}
+	else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
+		PS3_DPAD_LEFT
+	}
+	else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
+		PS3_DPAD_RIGHT
 	}
 
 	// Buttons
@@ -129,39 +95,19 @@ void readInputPS3() {
 		PS3_TRIANGLE
 
 	if(!Stick_HP) {
-		if(CFG_EMU_4X && metaPressed) {
-			PS3_L1
-			metaWasUsed = 1;
-		}
-		else
-			PS3_R1
+		PS3_R1
 	}
 
 	if(!Stick_LK) {
-		if(!CFG_X3_READ && metaPressed) {
-			PS3_L3
-			metaWasUsed = 1;
-		}
-		else
-			PS3_CROSS
+		PS3_CROSS
 	}
 
 	if(!Stick_MK) {
-		if(!CFG_X3_READ && metaPressed) {
-			PS3_R3
-			metaWasUsed = 1;
-		}
-		else
-			PS3_CIRCLE
+		PS3_CIRCLE
 	}
 
 	if(!Stick_HK) {
-		if(CFG_EMU_4X && metaPressed) {
-			PS3_L2
-			metaWasUsed = 1;
-		}
-		else
-			PS3_R2
+		PS3_R2
 	}
 
 #ifdef EXTRA_BUTTONS					
@@ -172,27 +118,6 @@ void readInputPS3() {
 		PS3_L2
 #endif
 
-	if(CFG_HOME_EMU && !Stick_Start && !Stick_Select) {
-		PS3_PS
-		metaWasUsed = 1;
-	}
-	else {
-		if(CFG_META_BUTTON_START) {
-			if(metaSendCount > 0)
-				PS3_START
-
-			if(!Stick_Select)
-				PS3_SELECT
-		}
-		else {
-			if(!Stick_Start)
-				PS3_START
-
-			if(metaSendCount > 0)
-				PS3_SELECT
-		}
-	}
-
 	if(CFG_X3_READ) {
 		if(!Stick_S3)
 			PS3_L3
@@ -200,6 +125,12 @@ void readInputPS3() {
 		if(!Stick_S4)
 			PS3_R3
 	}
+
+	if(!Stick_Start)
+		PS3_START
+
+	if(!Stick_Select)
+		PS3_SELECT
 
 	if(!Stick_Home)
 		PS3_PS
@@ -214,11 +145,8 @@ void ps3_init_controller() {
 }
 
 void ps3_controller() {
-	metaSendRepeats = 40;
-
     while(1) { /* main event loop */
 		usbPoll();
-		updateMetaState();
 		updateJoystickMode();
         readInputPS3();
 		usbSetInterrupt3(data.array, 16);

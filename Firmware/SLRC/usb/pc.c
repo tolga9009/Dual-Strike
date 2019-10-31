@@ -45,68 +45,34 @@ void readInputPC() {
 	resetPCReportBuffer();
 	updateStickState();	
 
-	if(CFG_JOYSTICK_SWITCH_READ || !metaPressed) {
-		// Left Joystick Directions
-		if(CFG_LEFT_STICK) {
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP))
-				PC_LS_UP
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN))
-				PC_LS_DOWN
-
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT))
-				PC_LS_LEFT
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT))
-				PC_LS_RIGHT
+	// Digital Pad Directions
+	if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP)) {
+		if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
+			PC_DPAD_UP_LEFT
 		}
-
-		// Right Joystick Directions
-		if(CFG_RIGHT_STICK) {
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP))
-				PC_RS_UP
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN))
-				PC_RS_DOWN
-		
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT))
-				PC_RS_LEFT
-			
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT))
-				PC_RS_RIGHT
+		else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
+			PC_DPAD_UP_RIGHT
 		}
-
-		// Digital Pad Directions
-		if(CFG_DIGITAL_PAD) {
-			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP)) {
-				if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
-					PC_DPAD_UP_LEFT
-				}
-				else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
-					PC_DPAD_UP_RIGHT
-				}
-				else {
-					PC_DPAD_UP
-				}
-			}
-			else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN)) {
-				if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
-					PC_DPAD_DOWN_LEFT
-				}
-				else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
-					PC_DPAD_DOWN_RIGHT
-				}
-				else {
-					PC_DPAD_DOWN
-				}
-			}
-			else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
-				PC_DPAD_LEFT
-			}
-			else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
-				PC_DPAD_RIGHT
-			}
+		else {
+			PC_DPAD_UP
 		}
+	}
+	else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_DOWN)) {
+		if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
+			PC_DPAD_DOWN_LEFT
+		}
+		else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
+			PC_DPAD_DOWN_RIGHT
+		}
+		else {
+			PC_DPAD_DOWN
+		}
+	}
+	else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_LEFT)) {
+		PC_DPAD_LEFT
+	}
+	else if(STICK_STATE_SIGNAL(stickState, STICK_STATE_RIGHT)) {
+		PC_DPAD_RIGHT
 	}
 
 	// Buttons
@@ -144,26 +110,11 @@ void readInputPC() {
 			PC_S4
 	}
 
-	if(CFG_HOME_EMU && !Stick_Start && !Stick_Select) {
-		PC_HOME
-		metaWasUsed = 1;
-	}
-	else {
-		if(CFG_META_BUTTON_START) {
-			if(metaSendCount > 0)
-				PC_START
+	if(!Stick_Start)
+		PC_START
 
-			if(!Stick_Select)
-				PC_SELECT
-		}
-		else {
-			if(!Stick_Start)
-				PC_START
-
-			if(metaSendCount > 0)
-				PC_SELECT
-		}
-	}
+	if(!Stick_Select)
+		PC_SELECT
 
 	if(!Stick_Home)
 		PC_HOME
@@ -186,11 +137,8 @@ void pc_test_controller() {
 }
 
 void pc_controller() {
-	metaSendRepeats = 40;
-
     while(1) { /* main event loop */
 		usbPoll();
-		updateMetaState();
 		updateJoystickMode();
         readInputPC();
 		sendDataUSB(data.array, 4);

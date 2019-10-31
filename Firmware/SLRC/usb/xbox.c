@@ -74,7 +74,7 @@ void readInputXBox() {
 	resetDataXBox();
 	updateStickState();	
 
-	if(CFG_JOYSTICK_SWITCH_READ || !metaPressed) {
+	if(CFG_JOYSTICK_SWITCH_READ) {
 		// Left Joystick Directions
 		if(CFG_LEFT_STICK) {
 			if(STICK_STATE_SIGNAL(stickState, STICK_STATE_UP))
@@ -129,12 +129,7 @@ void readInputXBox() {
 		XBOX_Y
 
 	if(!Stick_HP) {
-		if(CFG_EMU_4X && metaPressed) {
-			XBOX_LT
-			metaWasUsed = 1;
-		}
-		else
-			XBOX_BLACK
+		XBOX_BLACK
 	}
 		
 
@@ -145,12 +140,7 @@ void readInputXBox() {
 		XBOX_B
 
 	if(!Stick_HK) {
-		if(CFG_EMU_4X && metaPressed) {
-			XBOX_RT
-			metaWasUsed = 1;
-		}
-		else
-			XBOX_WHITE
+		XBOX_WHITE
 	}
 
 #ifdef EXTRA_BUTTONS
@@ -160,28 +150,11 @@ void readInputXBox() {
 	if(!Stick_4K)
 		XBOX_RT
 #endif
+	if(!Stick_Start)
+		XBOX_START
 
-	if(CFG_JOYSTICK_SWITCH_READ && !CFG_EMU_4X) {
-		if(!Stick_Start)
-			XBOX_START
-
-		if(!Stick_Select)
-			XBOX_BACK
-	}
-	else if(CFG_META_BUTTON_START) {
-		if(metaSendCount)
-			XBOX_START
-
-		if(!Stick_Select)
-			XBOX_BACK
-	}
-	else {
-		if(!Stick_Start)
-			XBOX_START
-
-		if(metaSendCount)
-			XBOX_BACK
-	}
+	if(!Stick_Select)
+		XBOX_BACK
 }
 
 void xbox_init_controller() {
@@ -191,12 +164,10 @@ void xbox_init_controller() {
 }
 
 void xbox_controller() {
-	metaSendRepeats = 20;
 	//eeprom_write_word((void*)E2END-1, 0); // DEBUG
 
     while(1) { /* main event loop */
 		usbPoll();
-		updateMetaState();
 		updateJoystickMode();
         readInputXBox();
 		//sendDataUSB3(data.array, 20); // each packet is interpreted by XBox as whole report, works on Windows when max packet size is 8

@@ -256,36 +256,6 @@ int hardwareInit() {
 }
 
 /* ------------------------------------------------------------------------- */
-/* Here the meta-button functionality is defined. */
-
-uchar metaPressed = 0;
-uchar metaWasUsed = 0;
-uint metaSendCount = 0;
-uint metaSendRepeats = 0;
-
-void updateMetaState() {
-	uchar lastMetaPressed = metaPressed;
-	
-	if(CFG_META_BUTTON_START)
-		metaPressed = !Stick_Start;
-	else
-		metaPressed = !Stick_Select;
-
-	uchar metaReleased = lastMetaPressed && !metaPressed;
-
-	if(metaWasUsed) {
-		metaSendCount = 0;
-
-		if(metaReleased)
-			metaWasUsed = 0;
-	}
-	else if(metaReleased)
-		metaSendCount = metaSendRepeats;
-    else if(metaSendCount > 0)
-		 metaSendCount--;
-}
-
-/* ------------------------------------------------------------------------- */
 
 void updateJoystickMode() {
     if(CFG_JOYSTICK_SWITCH_READ) {
@@ -299,24 +269,6 @@ void updateJoystickMode() {
 			CFG_SET_DIGITAL_PAD(config)
         }
     }
-	else {
-		if(CFG_ON_THE_FLY_JOYSTICK_MODE_SWITCHING) {
-			if(metaPressed) {
-				if(!Stick_Up) {
-					CFG_SET_DIGITAL_PAD(config)
-					metaWasUsed = 1;
-				}
-				else if(!Stick_Left) {
-					CFG_SET_LEFT_STICK(config)
-					metaWasUsed = 1;
-				}
-				else if(!Stick_Right) {
-					CFG_SET_RIGHT_STICK(config)
-					metaWasUsed = 1;
-				}
-			}
-		}
-	}
 }
 
 /* ------------------------------------------------------------------------- */

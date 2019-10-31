@@ -9,7 +9,6 @@ void pass_through() {
 
     while(1) {
 	    if(CFG_JOYSTICK_SWITCH_EMU) {
-			updateMetaState();
 			updateJoystickMode();
 
 	        if(CFG_LEFT_STICK) {

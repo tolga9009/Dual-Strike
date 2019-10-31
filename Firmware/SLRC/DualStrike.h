@@ -126,13 +126,8 @@
 #define Stick_S4		(PINC & (1<<6))
 
 #define START_STATE_VARIABLES \
-extern uchar metaPressed;\
-extern uchar metaWasUsed;\
-extern uint metaSendCount;\
-extern uint metaSendRepeats;\
 
 void updateJoystickMode();
-void updateMetaState();
 void readConfig(uint8_t newConfig[CONFIG_BYTE_WIDTH + 2]);
 void writeConfig(uint8_t newConfig[CONFIG_BYTE_WIDTH + 2]);
 
