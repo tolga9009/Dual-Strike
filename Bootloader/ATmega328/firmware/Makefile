@@ -19,8 +19,24 @@ BOOTLOADER_ADDRESS = 0x7000
 F_CPU = 12000000
 FUSEH = 0xd8
 FUSEL = 0xcf
-#FUSEE = 0xff
-# https://eleccelerator.com/fusecalc/fusecalc.php?chip=atmega328p&LOW=CF&HIGH=D8&EXTENDED=FF&LOCKBIT=3F
+# Extended Fuse: Brown-out detection disabled
+FUSEE = 0xff
+# Fuse high byte:
+# 0xd8 = 1 1 0 1   1 0 0 0 <-- BOOTRST (boot reset vector at 0x7000)
+#        ^ ^ ^ ^   ^ ^ ^------ BOOTSZ0
+#        | | | |   | +-------- BOOTSZ1
+#        | | | |   + --------- EESAVE (don't preserve EEPROM over chip erase)
+#        | | | +-------------- WDTON (WDT not always on)
+#        | | +---------------- SPIEN (allow serial programming)
+#        | +------------------ DWEN
+#        +-------------------- RSTDISBL (reset pin is enabled)
+# Fuse low byte:
+# 0xcf = 1 1 0 0   1 1 1 1
+#        ^ ^ \ /   \--+--/
+#        | |  |       +------- CKSEL 3..0 (external >8M crystal)
+#        | |  +--------------- SUT 1..0 (crystal osc, BOD enabled)
+#        | +------------------ CKOUT
+#        +-------------------- CKDIV8
 
 ###############################################################################
 
@@ -59,7 +75,7 @@ readflash:
 	$(AVRDUDE) -U flash:r:read.hex:i
 
 fuse:
-	$(AVRDUDE) -U hfuse:w:$(FUSEH):m -U lfuse:w:$(FUSEL):m
+	$(AVRDUDE) -U hfuse:w:$(FUSEH):m -U lfuse:w:$(FUSEL):m 	-U efuse:w:$(FUSEE):m
 
 lock:
 	$(AVRDUDE) -U lock:w:0x2f:m
