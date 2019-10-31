@@ -4,7 +4,7 @@
 
 // DUAL STRIKE
 
-PROGMEM char usbDescriptorDeviceDS[] = {    /* USB device descriptor */
+PROGMEM const char usbDescriptorDeviceDS[] = {    /* USB device descriptor */
     18,         /* sizeof(usbDescriptorDevice): length of descriptor in bytes */
     USBDESCR_DEVICE,        /* descriptor type */
     0x10, 0x01,             /* USB version supported */
@@ -24,21 +24,21 @@ PROGMEM char usbDescriptorDeviceDS[] = {    /* USB device descriptor */
     1,          /* number of configurations */
 };
 
-PROGMEM char usbDescriptorConfiguration[] = {};
+PROGMEM const char usbDescriptorConfiguration[] = {};
 
-PROGMEM int  usbDescriptorStringVendorDS[] = {
+PROGMEM const int  usbDescriptorStringVendorDS[] = {
     USB_STRING_DESCRIPTOR_HEADER(USB_CFG_VENDOR_NAME_LEN),
     USB_CFG_VENDOR_NAME
 };
 
 // PS3
 
-PROGMEM int  usbDescriptorStringDevicePS3[] = {
+PROGMEM const int  usbDescriptorStringDevicePS3[] = {
     USB_STRING_DESCRIPTOR_HEADER(USB_CFG_DEVICE_NAME_LEN + 6),
     USB_CFG_DEVICE_NAME, ' ', '(', 'P', 'S', '3', ')'
 };
 
-PROGMEM char usbHidReportDescriptorPS3[124/*+6*/] = {
+PROGMEM const char usbHidReportDescriptorPS3[124/*+6*/] = {
     0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)
     0x09, 0x04,                    // USAGE (Joystick)
     0xa1, 0x01,                    // COLLECTION (Application)
@@ -110,7 +110,7 @@ PROGMEM char usbHidReportDescriptorPS3[124/*+6*/] = {
 };
 
 
-PROGMEM char usbDescriptorConfigurationPS3[] = {
+PROGMEM const char usbDescriptorConfigurationPS3[] = {
     /* HID USB configuration descriptor */
     9,          				/* sizeof(usbDescriptorConfiguration): length of descriptor in bytes */
     USBDESCR_CONFIG,   	 		/* descriptor type */
@@ -147,12 +147,12 @@ PROGMEM char usbDescriptorConfigurationPS3[] = {
 
 // PC
 
-PROGMEM int  usbDescriptorStringDevicePC[] = {
+PROGMEM const int  usbDescriptorStringDevicePC[] = {
     USB_STRING_DESCRIPTOR_HEADER(USB_CFG_DEVICE_NAME_LEN + 5),
     USB_CFG_DEVICE_NAME, ' ', '(', 'P', 'C', ')'
 };
 
-PROGMEM char usbHidReportDescriptorPC[74] = {
+PROGMEM const char usbHidReportDescriptorPC[74] = {
     0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)
     0x09, 0x05,                    // USAGE (Game Pad)
     0xa1, 0x01,                    // COLLECTION (Application)
@@ -192,7 +192,7 @@ PROGMEM char usbHidReportDescriptorPC[74] = {
     0xc0                           // END_COLLECTION
 };
 
-PROGMEM char usbDescriptorConfigurationPC[] = {
+PROGMEM const char usbDescriptorConfigurationPC[] = {
     /* HID USB configuration descriptor */
     9,          				/* sizeof(usbDescriptorConfiguration): length of descriptor in bytes */
     USBDESCR_CONFIG,   	 		/* descriptor type */
@@ -229,7 +229,7 @@ PROGMEM char usbDescriptorConfigurationPC[] = {
 
 // EEPROM PROGRAMMER
 
-PROGMEM char usbDescriptorDeviceEP[] = {    /* USB device descriptor */
+PROGMEM const char usbDescriptorDeviceEP[] = {    /* USB device descriptor */
     18,         /* sizeof(usbDescriptorDevice): length of descriptor in bytes */
     USBDESCR_DEVICE,        /* descriptor type */
     0x10, 0x01,             /* USB version supported */
@@ -246,12 +246,12 @@ PROGMEM char usbDescriptorDeviceEP[] = {    /* USB device descriptor */
     1,          			/* number of configurations */
 };
 
-PROGMEM int  usbDescriptorStringVendorEP[] = {
+PROGMEM const int  usbDescriptorStringVendorEP[] = {
     USB_STRING_DESCRIPTOR_HEADER(20),
     'p', 'o', 'h', 'l', '-', 'm', 'i', 'c', 'h', 'a', 'e', 'l', '@', 'g', 'm', 'x', '.', 'b', 'i', 'z'
 };
 
-PROGMEM int  usbDescriptorStringDeviceEP[] = {
+PROGMEM const int  usbDescriptorStringDeviceEP[] = {
     USB_STRING_DESCRIPTOR_HEADER(6),
     'H', 'I', 'D', ' ', 'E', 'P', 
 };
@@ -261,7 +261,7 @@ PROGMEM int  usbDescriptorStringDeviceEP[] = {
 #define EEPROM_SET_ADDRESS_REPORT_ID 3
 #define EEPROM_READING_REPORT_ID 4
 
-PROGMEM char usbHidReportDescriptorEP[51] = {
+PROGMEM const char usbHidReportDescriptorEP[51] = {
     0x06, 0x00, 0xff,              		// USAGE_PAGE (Generic Desktop)
     0x09, 0x01,                    		// USAGE (Vendor Usage 1)
     0xa1, 0x01,                    		// COLLECTION (Application)
@@ -292,7 +292,7 @@ PROGMEM char usbHidReportDescriptorEP[51] = {
     0xc0                           		// END_COLLECTION
 };
 
-PROGMEM char usbDescriptorConfigurationEP[] = {
+PROGMEM const char usbDescriptorConfigurationEP[] = {
     /* HID USB configuration descriptor */
     9,          				/* sizeof(usbDescriptorConfiguration): length of descriptor in bytes */
     USBDESCR_CONFIG,   	 		/* descriptor type */
@@ -330,7 +330,7 @@ PROGMEM char usbDescriptorConfigurationEP[] = {
 #if ATMEGA_NO == 168
 // MAME
 
-PROGMEM char usbDescriptorDeviceMAME[] = {    /* USB device descriptor */
+PROGMEM const char usbDescriptorDeviceMAME[] = {    /* USB device descriptor */
     18,         /* sizeof(usbDescriptorDevice): length of descriptor in bytes */
     USBDESCR_DEVICE,        /* descriptor type */
     0x10, 0x01,             /* USB version supported */
@@ -350,13 +350,13 @@ PROGMEM char usbDescriptorDeviceMAME[] = {    /* USB device descriptor */
     1                       /* number of configurations */
 };
 
-PROGMEM int  usbDescriptorStringDeviceMAME[] = {
+PROGMEM const int  usbDescriptorStringDeviceMAME[] = {
     USB_STRING_DESCRIPTOR_HEADER(USB_CFG_DEVICE_NAME_LEN + 7),
     USB_CFG_DEVICE_NAME, ' ', '(', 'M', 'A', 'M', 'E', ')'
 };
 
 
-PROGMEM char usbHidReportDescriptorMAME[110] = {
+PROGMEM const char usbHidReportDescriptorMAME[110] = {
     0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)
     0x09, 0x06,                    // USAGE (Keyboard)
     0x15, 0x00,                    // LOGICAL_MINIMUM (0)
@@ -416,7 +416,7 @@ PROGMEM char usbHidReportDescriptorMAME[110] = {
 };
 
 
-PROGMEM char usbDescriptorConfigurationMAME[] = {
+PROGMEM const char usbDescriptorConfigurationMAME[] = {
     /* HID USB configuration descriptor */
     9,          				/* sizeof(usbDescriptorConfiguration): length of descriptor in bytes */
     USBDESCR_CONFIG,   	 		/* descriptor type */
@@ -453,7 +453,7 @@ PROGMEM char usbDescriptorConfigurationMAME[] = {
 
 // XBOX
 
-PROGMEM char usbDescriptorDeviceXBox[] = {    /* USB device descriptor */
+PROGMEM const char usbDescriptorDeviceXBox[] = {    /* USB device descriptor */
     18,         /* sizeof(usbDescriptorDevice): length of descriptor in bytes */
     USBDESCR_DEVICE,        /* descriptor type */
     0x10, 0x01,             /* USB version supported */
@@ -473,7 +473,7 @@ PROGMEM char usbDescriptorDeviceXBox[] = {    /* USB device descriptor */
     1,          /* number of configurations */
 };
 
-PROGMEM int  usbDescriptorStringDeviceXBox[] = {
+PROGMEM const int  usbDescriptorStringDeviceXBox[] = {
     USB_STRING_DESCRIPTOR_HEADER(USB_CFG_DEVICE_NAME_LEN + 7),
     USB_CFG_DEVICE_NAME, ' ', '(', 'X', 'B', 'o', 'x', ')'
 };
@@ -712,4 +712,3 @@ usbMsgLen_t usbFunctionDescriptor(struct usbRequest *rq) {
 
     return len;
 }
-

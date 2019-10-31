@@ -3,7 +3,7 @@
 #include "../DualStrike.h"
 #include <avr/io.h>
 
-extern uint8_t config[2];
+extern uint8_t config[CONFIG_BYTE_WIDTH + 2];
 
 void pass_through() {
 
@@ -97,4 +97,3 @@ void pass_through() {
         }
     }
 }
-

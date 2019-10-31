@@ -10,7 +10,7 @@
 #include <avr/pgmspace.h>   /* required by usbdrv.h */
 #include "usbdrv/usbdrv.h"
 
-extern uint8_t config[2];
+extern uint8_t config[CONFIG_BYTE_WIDTH + 2];
 extern uchar detected;
 
 /* ------------------------------------------------------------------------- */
