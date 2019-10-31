@@ -103,21 +103,9 @@ void updateStickState() {
 	if(!Stick_Right)
 		stickState |= 1<<STICK_STATE_RIGHT;
 
+	// SOCD: Up + Down = Up, Left + Right = Neutral
 	if(STICK_STATE_RAW(stickState, STICK_STATE_UP) && STICK_STATE_RAW(stickState, STICK_STATE_DOWN)) {
-		if(STICK_STATE_RAW(stickStateOld, STICK_STATE_UP) && STICK_STATE_RAW(stickStateOld, STICK_STATE_DOWN)) {
-			if(STICK_STATE_SIGNAL(stickStateOld, STICK_STATE_UP)) {
-				STICK_STATE_SET_SIGNAL(STICK_STATE_UP);
-			}
-			else { // STICK_STATE_SIGNAL(stickStateOld, STICK_STATE_DOWN)
-				STICK_STATE_SET_SIGNAL(STICK_STATE_DOWN);
-			}
-		}
-		else if(STICK_STATE_RAW(stickStateOld, STICK_STATE_UP)) {
-			STICK_STATE_SET_SIGNAL(STICK_STATE_DOWN);
-		}
-		else if(STICK_STATE_RAW(stickStateOld, STICK_STATE_DOWN)) {
-			STICK_STATE_SET_SIGNAL(STICK_STATE_UP);
-		}
+		STICK_STATE_SET_SIGNAL(STICK_STATE_UP);
 	}
 	else if(STICK_STATE_RAW(stickState, STICK_STATE_UP)) {
 		STICK_STATE_SET_SIGNAL(STICK_STATE_UP);

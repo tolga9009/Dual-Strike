@@ -3,7 +3,7 @@
 ###############################################################################
 
 ## General Flags
-PROJECT = DualStrike
+PROJECT = DualStrike_X
 ATMEGA_NO = 168
 MCU = atmega$(ATMEGA_NO)
 TARGET = $(PROJECT).elf
@@ -81,7 +81,7 @@ size: ${TARGET}
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf *.o *.elf dep/* *.eep *.hex
+	-rm -rf *.o *.elf dep/* *.eep
 
 ## Other dependencies
 -include $(shell mkdir dep 2>/dev/null) $(wildcard dep/*)
